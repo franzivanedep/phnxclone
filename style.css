@@ -1,0 +1,14 @@
+/*
+Theme Name: notcuteanymore
+Theme URI: http://example.com/twentytwentyfive-child
+Description: Child theme for Twenty Twenty-Five
+Author: Franz
+Author URI: http://example.com
+Template: twentytwentyfive
+Version: 1.0.0
+*/
+
+/* Import parent theme styles */
+@import url("../twentytwentyfive/style.css");
+
+/* Your custom CSS goes here */
