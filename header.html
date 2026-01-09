@@ -1,0 +1,184 @@
+<header id="masthead" class="site-header">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+        /* Prevent the "Small" look and horizontal scroll */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .phoenix-header-inner, .phoenix-nav a, .feature-item h4, .feature-item p, .login-link, .cta-button, .site-title a {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- Main Container --- */
+        .phoenix-header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: #fff;
+            position: relative;
+            z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* Branding */
+        .site-title a { color: #333; text-decoration: none; font-weight: 800; font-size: 24px; display: flex; align-items: center; gap: 10px; }
+        .site-title span { color: #00b37e; }
+
+        /* Desktop Navigation (Hidden on Mobile) */
+        .phoenix-nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 30px; }
+        .phoenix-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 16px; }
+
+        /* Mega Menu Desktop */
+        .has-mega-menu { position: static; }
+        .mega-dropdown {
+            position: absolute; top: 100%; left: 0; width: 100%; background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); opacity: 0; visibility: hidden;
+            transform: translateY(10px); transition: 0.3s; z-index: 999;
+            padding: 40px 0; border-top: 1px solid #eee;
+        }
+        .has-mega-menu:hover .mega-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        .mega-content-grid { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 1200px; margin: 0 auto; gap: 30px; padding: 0 20px; }
+
+        .feature-icon {
+            display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px;
+            background: #e6f7f2; color: #00b37e; border-radius: 50%; font-size: 20px; margin-bottom: 15px;
+        }
+
+        /* Actions */
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .login-link { color: #00b37e !important; font-weight: 600; text-decoration: none; }
+        .cta-button { background: #00b37e; color: #fff !important; padding: 12px 24px; border-radius: 6px; font-weight: 600; text-decoration: none; }
+
+        /* --- MOBILE MODE (Matches your Image) --- */
+        .mobile-toggle { 
+            display: none; 
+            background: #f5f5f5; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 6px; 
+            cursor: pointer;
+            width: 48px;
+            height: 45px;
+        }
+        .mobile-toggle span { display: block; width: 24px; height: 3px; background: #333; margin: 5px 0; transition: 0.3s; }
+
+        @media (max-width: 991px) {
+            .mobile-toggle { display: block; }
+            .phoenix-nav, .header-actions { display: none; width: 100%; }
+            
+            /* When Open */
+            .menu-active .phoenix-nav, .menu-active .header-actions { display: block; }
+            .phoenix-header-inner { flex-wrap: wrap; padding: 20px; /* Increased padding for more space */ }
+
+            /* Branding - Larger font on mobile */
+            .site-title a { font-size: 28px; /* Increased from 24px to make it less small */ }
+
+            /* Navigation Links (Stacked & Large) */
+            .phoenix-nav ul { flex-direction: column; gap: 0; margin-top: 10px; width: 100%; }
+            .phoenix-nav li { width: 100%; border-bottom: 1px solid #f0f0f0; }
+            .phoenix-nav a { 
+                display: block; 
+                padding: 20px 10px; 
+                font-size: 20px; /* Increased from 18px to make it bigger */
+                color: #333;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* Mobile Dropdown Functies */
+            .mega-dropdown { position: static; display: none; opacity: 1; visibility: visible; transform: none; box-shadow: none; padding: 20px; background: #fafafa; border: none; }
+            .has-mega-menu.open .mega-dropdown { display: block; }
+            .mega-content-grid { grid-template-columns: 1fr; gap: 20px; padding: 0; }
+            .feature-item { display: flex; align-items: center; gap: 15px; text-align: left; }
+            .feature-icon { margin-bottom: 0; width: 40px; height: 40px; flex-shrink: 0; }
+
+            /* Inloggen & CTA */
+            .header-actions { padding: 0; }
+            .login-link { 
+                display: block; 
+                padding: 20px 10px; 
+                border-bottom: 1px solid #f0f0f0; 
+                font-size: 20px; /* Increased from 18px */
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .cta-button { 
+                display: block; 
+                margin: 25px 10px; 
+                text-align: center; 
+                padding: 18px; 
+                font-size: 20px; /* Increased from 18px */
+                border-radius: 8px;
+            }
+        }
+    </style>
+
+    <div class="phoenix-header-inner" id="phoenixHeader">
+        <div class="site-branding">
+            <h1 class="site-title" style="margin:0;">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><span>●</span> Phoenix</a>
+            </h1>
+        </div>
+
+        <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <span></span><span></span><span></span>
+        </button>
+
+        <nav class="phoenix-nav">
+            <ul>
+                <li><a href="<?php echo home_url('/'); ?>">Home</a></li>
+                <li class="has-mega-menu" id="megaTrigger">
+                    <a href="javascript:void(0)" onclick="toggleMegaMenu(event)">Functies <span style="font-size: 12px; margin-left: 5px;">▼</span></a>
+                    <div class="mega-dropdown">
+                        <div class="mega-content-grid">
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="dashicons dashicons-layout"></i></div>
+                                <div><h4>Landingspagina's</h4><p>Maak razendsnel de beste landingspagina's</p></div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="dashicons dashicons-search"></i></div>
+                                <div><h4>Scoren in Google</h4><p>Ontworpen door SEO-experts om te scoren in Google</p></div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="dashicons dashicons-chart-line"></i></div>
+                                <div><h4>Conversietechnieken</h4><p>Meer leads en klanten uit je bezoekers</p></div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="dashicons dashicons-chart-bar"></i></div>
+                                <div><h4>Statistieken</h4><p>In een oogopslag zien hoe je business er voor staat</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">Ervaringen</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <a href="/login" class="login-link">Inloggen</a>
+            <a href="/register" class="cta-button">Probeer gratis</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('phoenixHeader').classList.toggle('menu-active');
+        }
+
+        function toggleMegaMenu(e) {
+            if (window.innerWidth <= 991) {
+                e.preventDefault();
+                document.getElementById('megaTrigger').classList.toggle('open');
+            }
+        }
+    </script>
+</header>
