@@ -1,184 +1,283 @@
-<header id="masthead" class="site-header">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+<?php
+/**
+ * Custom JB header for Twenty Twenty theme with Right Aligned Navigation.
+ */
+?><!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<?php wp_head(); ?>
+</head>
 
-        /* Prevent the "Small" look and horizontal scroll */
-        html, body {
-            max-width: 100%;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-            -webkit-text-size-adjust: 100%;
-        }
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
 
-        .phoenix-header-inner, .phoenix-nav a, .feature-item h4, .feature-item p, .login-link, .cta-button, .site-title a {
-            font-family: 'Poppins', sans-serif;
-        }
+<?php 
+$primary_color    = esc_attr(get_theme_mod('jb_primary_color', '#00b37e'));
+$header_bg        = esc_attr(get_theme_mod('jb_header_bg', '#ffffff')); 
+$nav_link_col     = esc_attr(get_theme_mod('jb_nav_link_color', '#1a1a1a'));
+$logo_url         = get_theme_mod('jb_logo');
+$remove_logo      = get_theme_mod('jb_remove_logo', false);
+if ( $remove_logo ) { $logo_url = ''; }
+?>
 
-        /* --- Main Container --- */
-        .phoenix-header-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            background: #fff;
-            position: relative;
-            z-index: 1000;
-            width: 100%;
-            box-sizing: border-box;
-            border-bottom: 1px solid #f0f0f0;
-        }
+<style>
+:root{
+    --primary-color:<?php echo $primary_color; ?>;
+    --header-bg:<?php echo $header_bg; ?>;
+    --nav-link-color:<?php echo $nav_link_col; ?>;
+    --overlay-bg:#f8f8f8;
+}
 
-        /* Branding */
-        .site-title a { color: #333; text-decoration: none; font-weight: 800; font-size: 24px; display: flex; align-items: center; gap: 10px; }
-        .site-title span { color: #00b37e; }
+#site-header{
+    position:relative;
+    z-index:100;
+    width:100%;
+    background:var(--header-bg);
+    border-bottom: 1px solid #eee;
+}
 
-        /* Desktop Navigation (Hidden on Mobile) */
-        .phoenix-nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 30px; }
-        .phoenix-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 16px; }
+.jb-header-inner{
+    display:flex;
+    align-items: flex-end; 
+    justify-content: space-between;
+    padding: 40px 20px 20px 20px; 
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        /* Mega Menu Desktop */
-        .has-mega-menu { position: static; }
-        .mega-dropdown {
-            position: absolute; top: 100%; left: 0; width: 100%; background: #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); opacity: 0; visibility: hidden;
-            transform: translateY(10px); transition: 0.3s; z-index: 999;
-            padding: 40px 0; border-top: 1px solid #eee;
-        }
-        .has-mega-menu:hover .mega-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
-        .mega-content-grid { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 1200px; margin: 0 auto; gap: 30px; padding: 0 20px; }
+.site-branding img{
+    max-height: 60px;
+    width:auto;
+    display:block;
+}
 
-        .feature-icon {
-            display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px;
-            background: #e6f7f2; color: #00b37e; border-radius: 50%; font-size: 20px; margin-bottom: 15px;
-        }
+.header-actions{
+    display:flex;
+    align-items:flex-end;
+    gap: 20px; 
+}
 
-        /* Actions */
-        .header-actions { display: flex; align-items: center; gap: 20px; }
-        .login-link { color: #00b37e !important; font-weight: 600; text-decoration: none; }
-        .cta-button { background: #00b37e; color: #fff !important; padding: 12px 24px; border-radius: 6px; font-weight: 600; text-decoration: none; }
+.jb-nav-desktop{
+    display:none;
+}
 
-        /* --- MOBILE MODE (Matches your Image) --- */
-        .mobile-toggle { 
-            display: none; 
-            background: #f5f5f5; 
-            border: none; 
-            padding: 12px; 
-            border-radius: 6px; 
-            cursor: pointer;
-            width: 48px;
-            height: 45px;
-        }
-        .mobile-toggle span { display: block; width: 24px; height: 3px; background: #333; margin: 5px 0; transition: 0.3s; }
+@media(min-width:1024px){
+    .jb-nav-desktop{
+        display:block;
+    }
 
-        @media (max-width: 991px) {
-            .mobile-toggle { display: block; }
-            .phoenix-nav, .header-actions { display: none; width: 100%; }
-            
-            /* When Open */
-            .menu-active .phoenix-nav, .menu-active .header-actions { display: block; }
-            .phoenix-header-inner { flex-wrap: wrap; padding: 20px; /* Increased padding for more space */ }
+    .jb-nav-desktop ul{
+        display:flex;
+        align-items:flex-end;
+        gap: 18px; 
+        list-style:none;
+        margin:0;
+        padding:0;
+    }
 
-            /* Branding - Larger font on mobile */
-            .site-title a { font-size: 28px; /* Increased from 24px to make it less small */ }
+    .jb-nav-desktop ul li{
+        position: relative;
+    }
 
-            /* Navigation Links (Stacked & Large) */
-            .phoenix-nav ul { flex-direction: column; gap: 0; margin-top: 10px; width: 100%; }
-            .phoenix-nav li { width: 100%; border-bottom: 1px solid #f0f0f0; }
-            .phoenix-nav a { 
-                display: block; 
-                padding: 20px 10px; 
-                font-size: 20px; /* Increased from 18px to make it bigger */
-                color: #333;
-                width: 100%;
-                box-sizing: border-box;
-            }
+    /* Fixed syntax: semicolon moved to the end of the line */
+    .jb-nav-desktop ul li a, 
+    #site-header .jb-nav-desktop ul li a {
+        text-decoration:none;
+        text-transform:uppercase;
+        font-size: 12px !important; 
+        letter-spacing: 0.8px;
+        font-weight: 400;
+        color:var(--nav-link-color) !important;
+        white-space:nowrap;
+        transition: opacity 0.3s;
+        display: block;
+        padding: 0 0 2px 0;
+    }
+    
+    .jb-nav-desktop ul li::before {
+        content: "";
+        position: absolute;
+        top: -10px; 
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #c4b2a3;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+        transform-origin: left;
+    }
 
-            /* Mobile Dropdown Functies */
-            .mega-dropdown { position: static; display: none; opacity: 1; visibility: visible; transform: none; box-shadow: none; padding: 20px; background: #fafafa; border: none; }
-            .has-mega-menu.open .mega-dropdown { display: block; }
-            .mega-content-grid { grid-template-columns: 1fr; gap: 20px; padding: 0; }
-            .feature-item { display: flex; align-items: center; gap: 15px; text-align: left; }
-            .feature-icon { margin-bottom: 0; width: 40px; height: 40px; flex-shrink: 0; }
+    .jb-nav-desktop ul li:hover::before {
+        transform: scaleX(1);
+    }
+}
 
-            /* Inloggen & CTA */
-            .header-actions { padding: 0; }
-            .login-link { 
-                display: block; 
-                padding: 20px 10px; 
-                border-bottom: 1px solid #f0f0f0; 
-                font-size: 20px; /* Increased from 18px */
-                width: 100%;
-                box-sizing: border-box;
-            }
-            .cta-button { 
-                display: block; 
-                margin: 25px 10px; 
-                text-align: center; 
-                padding: 18px; 
-                font-size: 20px; /* Increased from 18px */
-                border-radius: 8px;
-            }
-        }
-    </style>
+.lang-toggle{
+    font-size: 10px !important;
+    letter-spacing: 0.5px;
+    text-transform:uppercase;
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 400;
+    padding-bottom: 2px;
+}
 
-    <div class="phoenix-header-inner" id="phoenixHeader">
+.mobile-toggle{
+    background:none;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    padding:0;
+    margin-left: 5px;
+    padding-bottom: 4px;
+}
+
+.mobile-toggle span{
+    height: 2px;
+    background:#000;
+    display:block;
+}
+
+.mobile-toggle span:nth-child(1){width:24px;}
+.mobile-toggle span:nth-child(2){width:24px;}
+.mobile-toggle span:nth-child(3){width:16px; align-self: flex-start;}
+
+/* OVERLAY STYLES */
+.nav-overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:var(--overlay-bg);
+    z-index:9999;
+    opacity:0;
+    visibility:hidden;
+    transition:0.4s ease-in-out;
+    display:flex;
+    flex-direction:column;
+}
+
+.nav-overlay.open{
+    opacity:1;
+    visibility:visible;
+}
+
+.overlay-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.close-button{
+    background:none;
+    border:none;
+    font-size:40px;
+    cursor:pointer;
+}
+
+.overlay-content{
+    flex-grow:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.overlay-content ul{
+    list-style:none;
+    padding:0;
+    text-align:center;
+}
+
+.overlay-content ul li{
+    margin:15px 0;
+}
+
+.overlay-content ul li a{
+    text-decoration:none;
+    text-transform:uppercase;
+    color:#000;
+    font-size:24px;
+}
+
+body.no-scroll{
+    overflow:hidden;
+}
+</style>
+
+<header id="site-header">
+    <div class="jb-header-inner">
+
         <div class="site-branding">
-            <h1 class="site-title" style="margin:0;">
-                <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><span>●</span> Phoenix</a>
-            </h1>
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+                <?php if ( ! empty( $logo_url ) ) : ?>
+                    <img src="<?php echo esc_url($logo_url); ?>" alt="Logo">
+                <?php endif; ?>
+            </a>
         </div>
-
-        <button class="mobile-toggle" onclick="toggleMobileMenu()">
-            <span></span><span></span><span></span>
-        </button>
-
-        <nav class="phoenix-nav">
-            <ul>
-                <li><a href="<?php echo home_url('/'); ?>">Home</a></li>
-                <li class="has-mega-menu" id="megaTrigger">
-                    <a href="javascript:void(0)" onclick="toggleMegaMenu(event)">Functies <span style="font-size: 12px; margin-left: 5px;">▼</span></a>
-                    <div class="mega-dropdown">
-                        <div class="mega-content-grid">
-                            <div class="feature-item">
-                                <div class="feature-icon"><i class="dashicons dashicons-layout"></i></div>
-                                <div><h4>Landingspagina's</h4><p>Maak razendsnel de beste landingspagina's</p></div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon"><i class="dashicons dashicons-search"></i></div>
-                                <div><h4>Scoren in Google</h4><p>Ontworpen door SEO-experts om te scoren in Google</p></div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon"><i class="dashicons dashicons-chart-line"></i></div>
-                                <div><h4>Conversietechnieken</h4><p>Meer leads en klanten uit je bezoekers</p></div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon"><i class="dashicons dashicons-chart-bar"></i></div>
-                                <div><h4>Statistieken</h4><p>In een oogopslag zien hoe je business er voor staat</p></div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#">Ervaringen</a></li>
-            </ul>
-        </nav>
 
         <div class="header-actions">
-            <a href="/login" class="login-link">Inloggen</a>
-            <a href="/register" class="cta-button">Probeer gratis</a>
+            <nav class="jb-nav-desktop">
+                <?php wp_nav_menu(array(
+                    'theme_location'=>'primary',
+                    'container'=>'',
+                    'items_wrap'=>'<ul>%3$s</ul>',
+                    'fallback_cb'=>false
+                )); ?>
+            </nav>
+
+            <span class="lang-toggle">
+                NL <i class="fa-solid fa-chevron-down" style="font-size:8px;"></i>
+            </span>
+
+            <button class="mobile-toggle" aria-label="Open Menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+
     </div>
 
-    <script>
-        function toggleMobileMenu() {
-            document.getElementById('phoenixHeader').classList.toggle('menu-active');
-        }
-
-        function toggleMegaMenu(e) {
-            if (window.innerWidth <= 991) {
-                e.preventDefault();
-                document.getElementById('megaTrigger').classList.toggle('open');
-            }
-        }
-    </script>
+    <div id="nav-overlay" class="nav-overlay">
+        <div class="overlay-header">
+            <div class="site-branding">
+                <?php if ( ! empty( $logo_url ) ) : ?>
+                    <img src="<?php echo esc_url($logo_url); ?>" alt="Logo">
+                <?php endif; ?>
+            </div>
+            <div class="header-actions">
+                <span class="lang-toggle">NL <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i></span>
+                <button class="close-button" aria-label="Close Menu" onclick="toggleMenu()">&times;</button>
+            </div>
+        </div>
+        <nav class="overlay-content">
+            <?php wp_nav_menu(array(
+                'theme_location'=>'primary',
+                'container'=>'',
+                'items_wrap'=>'<ul>%3$s</ul>',
+                'fallback_cb'=>false
+            )); ?>
+        </nav>
+    </div>
 </header>
+
+<script>
+function toggleMenu(){
+    const overlay=document.getElementById('nav-overlay');
+    const body=document.body;
+    overlay.classList.toggle('open');
+    body.classList.toggle('no-scroll');
+}
+</script>
